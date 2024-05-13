@@ -28,19 +28,18 @@ document.addEventListener('DOMContentLoaded', function () {
     btnSaveClient.addEventListener('click', (event) => {
         event.preventDefault();
         dataCliente();
-
         Limpiar_Inputs();
     });
 
     function dataCliente() {
-        const dni = document.getElementById("dni").value;
+        const dniClient = document.getElementById("dniClient").value;
         const firstName = document.getElementById("firstName").value;
         const lastName = document.getElementById("lastName").value;
         
         if (dni && firstName && lastName) {
             let dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
             dataCliente.push({
-                KEY_dni: dni,
+                KEY_dniClient: dniClient,
                 KEY_firstName: firstName,
                 KEY_lastName: lastName,
                 KEY_descont: 0.10,
@@ -51,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function Limpiar_Inputs() {
         const remove_inputs = [
-            "dni",
+            "dniClient",
             "firstName",
             "lastName",
         ];
