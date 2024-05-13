@@ -8,8 +8,8 @@
     font-size: 20px;
 }
 
-.topTable {
-    margin-top: -650px;
+.tableClient {
+    margin-top: -635px;
     filter: drop-shadow(1px 1px 10px #494949);
 }
 
@@ -51,6 +51,17 @@ nav ul li button {
 nav ul li button:hover {
     filter: drop-shadow(5px 5px 20px rgb(0, 0, 0));
     border: 3px solid #000000;
+}
+
+.findClients{
+    margin-bottom: 20px;
+    margin-left: 71%;
+}
+
+.findClientsTxt,
+.btnFindClients{
+    border: 2px solid #a1a0a0;
+    border-radius: 3px;
 }
 
 .footer {

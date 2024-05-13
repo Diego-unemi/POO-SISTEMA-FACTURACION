@@ -49,7 +49,7 @@
 
         <section class="containerClientes" id="containerClientes">
 
-            <div class="col-xs-3 col-sm-3">
+            <div class="col-sm-3">
                 <div class="card top">
                     <div class="card-header">
                         <strong>Registar</strong> <small> Clientes Regulares</small>
@@ -89,18 +89,17 @@
                                 <small class="form-text text-muted">inf. Obtendra un descuento es sus compras</small>
                             </div>
                             <div class="containerBtnSave">
-                                <button type="button" class="btnSaveClient" id="btnSaveClient">Guardar Clientes Regulares</button>
+                                <button type="button" class="btn btn-success btn-sm btnSaveClient" id="btnSaveClient">Guardar Clientes Regulares</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
 
-            <div class="content topTable">
-                <div class="animated fadeIn">
-                    <div class="row">
+          
+                    <div class="row tableClient" style="margin-left: 420px; width:70%" >
 
-                        <div class="col-md-9 offset-md-3">
+                        <div class="col-md-11">
                             <div class="card">
                                 <div class="card-header">
                                     <strong class="card-title">Tabla Datos Cliente</strong>
@@ -110,9 +109,9 @@
                                         class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
                                         <div class="findClients">
-                                            <input class="input-search-Mostrar_Datos" type="text"
-                                                id="searchInput-Mostrar_Datos" placeholder="Buscar cédula.">
-                                            <button class="btn-search-Mostrar_Datos" type="button" onclick="buscar()"><i
+                                            <input class="findClientsTxt"  id="findClientsTxt" type="text"
+                                                placeholder="Buscar cédula.">
+                                            <button class="btnFindClients" dir="btnFindClients" type="button" onclick="buscar()"><i
                                                     class="fas fa-search icono-búsqueda"></i></button>
                                         </div>
                                         
@@ -252,8 +251,7 @@
 
 
                     </div>
-                </div>
-            </div>
+            
 
         </section>
 
