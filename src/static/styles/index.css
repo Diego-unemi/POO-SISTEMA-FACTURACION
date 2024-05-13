@@ -1,11 +1,16 @@
-*{
+* {
     font-family: 'Times New Roman', Times, serif;
 }
 
-.top{
+.top {
     margin-top: 25px;
     filter: drop-shadow(1px 1px 10px #494949);
     font-size: 20px;
+}
+
+.topTable {
+    margin-top: -650px;
+    filter: drop-shadow(1px 1px 10px #494949);
 }
 
 header {
@@ -19,13 +24,15 @@ nav ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    text-align: right; /* Alinea los botones a la derecha */
+    text-align: right;
+    /* Alinea los botones a la derecha */
     margin-top: -30px;
 }
 
 nav ul li {
     display: inline-block;
-    margin-right: 80px; /* Agrega un espacio entre los botones */
+    margin-right: 80px;
+    /* Agrega un espacio entre los botones */
 }
 
 nav ul li button {
