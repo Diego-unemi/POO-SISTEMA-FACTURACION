@@ -9,6 +9,7 @@
     font-size: 20px;
 }
 
+<<<<<<< HEAD
 .modalNewDataClients {
     backdrop-filter: blur(20px);
     margin-top: 65px;
@@ -19,6 +20,10 @@
 .tableClient {
 
     margin-top: -550px;
+=======
+.topTable{
+    margin-top: -43.5%;
+>>>>>>> 4e5351f (cambios id)
     filter: drop-shadow(1px 1px 10px #494949);
 }
 
@@ -57,7 +62,41 @@ nav ul li button {
 
 nav ul li button:hover {
     filter: drop-shadow(5px 5px 20px rgb(0, 0, 0));
-    border: 3px solid #000000;
+    border: 3px solid #DEE2E6;
+}
+
+.findClients{
+    margin-bottom: 15px;
+    margin-left: 72.5%;
+}
+
+.btn-search-Mostrar_Datos {
+    font-size: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.71);
+    background-color: #f2f2f2;
+    border: 1px solid #DEE2E6;
+}
+
+.input-search-Mostrar_Datos {
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.71);
+    border-radius: 5px;
+    border: 1px solid #DEE2E6;
+}
+
+.fila-encontrada {
+    background-color: #f1f0f0;
+    border: 3px solid rgba(0, 27, 132, 0.73);
+    box-shadow: 0 0 50px rgba(0, 27, 132, 0.6);
+}
+
+.fila-encontradaMD {
+    background-color: #f8edf4;
+    border: 3px solid rgba(0, 27, 132, 0.73);
+    box-shadow: 0 0 50px rgba(0, 27, 132, 0.6);
 }
 
 .findClients {

@@ -62,9 +62,14 @@ document.addEventListener('DOMContentLoaded', function () {
     btnSaveClient.addEventListener('click', (event) => {
         event.preventDefault();
         dataCliente();
+<<<<<<< HEAD
+=======
+        Limpiar_Inputs();
+>>>>>>> 4e5351f (cambios id)
     });
     
     function dataCliente() {
+<<<<<<< HEAD
         const dni = document.getElementById("dniClient").value;
         const first_name = document.getElementById("datUserName").value;
         const last_name = document.getElementById("datUserLastname").value;
@@ -118,6 +123,21 @@ document.addEventListener('DOMContentLoaded', function () {
             displayClients(); 
         } else {
             alert("Por favor, complete todos los campos correctamente.");
+=======
+        const dniClient = document.getElementById("dniClient").value;
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        
+        if (dni && firstName && lastName) {
+            let dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
+            dataCliente.push({
+                KEY_dniClient: dniClient,
+                KEY_firstName: firstName,
+                KEY_lastName: lastName,
+                KEY_descont: 0.10,
+            });
+            localStorage.setItem('KEY_dataCliente', JSON.stringify(dataCliente));
+>>>>>>> 4e5351f (cambios id)
         }
     }
     
@@ -134,6 +154,14 @@ document.addEventListener('DOMContentLoaded', function () {
             "vipCredito",
 
 
+<<<<<<< HEAD
+=======
+    function Limpiar_Inputs() {
+        const remove_inputs = [
+            "dniClient",
+            "firstName",
+            "lastName",
+>>>>>>> 4e5351f (cambios id)
         ];
         inputsToClear.forEach(inputId => {
             document.getElementById(inputId).value = "";
