@@ -2,89 +2,89 @@
 
 class Client {
     constructor(first_name = "Consumidor", last_name = "Final", dni = "9999999999") {
-      this.first_name = first_name;
-      this.last_name = last_name;
-      this._dni = dni;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this._dni = dni;
     }
-  
+
     get dni() {
-      return this._dni;
+        return this._dni;
     }
-  
+
     set dni(value) {
-      if (value.length === 10 || value.length === 13) {
-        this._dni = value;
-      } else {
-        this._dni = "9999999999";
-      }
+        if (value.length === 10 || value.length === 13) {
+            this._dni = value;
+        } else {
+            this._dni = "9999999999";
+        }
     }
-  }
-  
+}
+
 class RegularClient extends Client {
     constructor(first_name = "Cliente", last_name = "Final", dni = "9999999999", card = false) {
-      super(first_name, last_name, dni);
-      this._discount = card ? 0.10 : 0;
+        super(first_name, last_name, dni);
+        this._discount = card ? 0.10 : 0;
     }
-  
+
     get discount() {
-      return this._discount;
+        return this._discount;
     }
-  
+
     toString() {
-      return `Cliente: ${this.first_name} ${this.last_name} Descuento: ${this.discount}`;
+        return `Cliente: ${this.first_name} ${this.last_name} Descuento: ${this.discount}`;
     }
-  }
+}
 
 
 
 class VipClient extends Client {
-  constructor(first_name = "Consumidor", last_name = "Final", dni = "9999999999") {
-    super(first_name, last_name, dni);
-    this._limit = 10000; // Límite de crédito del cliente VIP
-  }
+    constructor(first_name = "Consumidor", last_name = "Final", dni = "9999999999") {
+        super(first_name, last_name, dni);
+        this._limit = 10000; // Límite de crédito del cliente VIP
+    }
 
-  get limit() {
-    return this._limit;
-  }
+    get limit() {
+        return this._limit;
+    }
 
-  set limit(value) {
-    this._limit = (value < 10000 || value > 20000) ? 10000 : value;
-  }
+    set limit(value) {
+        this._limit = (value < 10000 || value > 20000) ? 10000 : value;
+    }
 
-  toString() {
-    return `Cliente: ${this.first_name} ${this.last_name} Cupo: ${this.limit}`;
-  }
+    toString() {
+        return `Cliente: ${this.first_name} ${this.last_name} Cupo: ${this.limit}`;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-   
+
     const btnSaveClient = document.getElementById("btnSaveClient");
     btnSaveClient.addEventListener('click', (event) => {
         event.preventDefault();
         dataCliente();
     });
-    
+
     function dataCliente() {
         const dni = document.getElementById("dniClient").value;
         const first_name = document.getElementById("datUserName").value;
         const last_name = document.getElementById("datUserLastname").value;
         const discount = document.getElementById("datUserLastname").value;
         const limit = parseFloat(document.getElementById("vipCredito").value); // Convertir el valor a número
-    
+
         const type = document.getElementById("Reg_Vip").value.toLowerCase().trim();
-    
-        if (dni && first_name && last_name ) {
+
+        if (dni && first_name && last_name) {
             if (type === 'regular') {
                 // Instanciar RegularClient para cliente regular
                 const regularClient = new RegularClient(first_name, last_name, dni, true);
-    
+
                 const clientData = {
                     KEY_dni: regularClient.dni,
                     KEY_first_name: regularClient.first_name,
                     KEY_last_name: regularClient.last_name,
                     KEY_discount: regularClient.discount,
                 };
-    
+
                 let dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
                 dataCliente.push(clientData);
                 localStorage.setItem('KEY_dataCliente', JSON.stringify(dataCliente));
@@ -94,18 +94,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert("El límite de crédito debe estar entre $10,000 y $20,000.");
                     return;
                 }
-    
+
                 // Instanciar VipClient para cliente VIP con el límite de crédito validado
                 const vipClient = new VipClient(first_name, last_name, dni);
                 vipClient.limit = limit; // Asignar el límite de crédito validado
-    
+
                 const clientData = {
                     KEY_dni: vipClient.dni,
                     KEY_first_name: vipClient.first_name,
                     KEY_last_name: vipClient.last_name,
                     KEY_limit: vipClient.limit,
                 };
-    
+
                 let dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
                 dataCliente.push(clientData);
                 localStorage.setItem('KEY_dataCliente', JSON.stringify(dataCliente));
@@ -113,15 +113,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert("Por favor, ingrese 'vip' o 'regular' para el tipo de cliente y un límite de crédito válido.");
                 return;
             }
-    
+
             formReset();
-            displayClients(); 
+            displayClients();
         } else {
             alert("Por favor, complete todos los campos correctamente.");
         }
     }
-    
-    
+
+
 
     //funcion limpiar form
     function formReset() {
@@ -149,14 +149,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const row = document.createElement("tr");
             let limitCell = '';
             let discountCell = '';
-    
+
             // Validar si es cliente VIP o Regular y asignar el valor a la celda correspondiente
             if (client.KEY_limit) {
                 limitCell = `<td>${client.KEY_limit} VIP</td>`;
             } else if (client.KEY_discount) {
                 discountCell = `<td>${client.KEY_discount} Regular</td>`;
             }
-    
+
             row.innerHTML = `
                 <td>${client.KEY_dni}</td>
                 <td>${client.KEY_first_name}</td>
@@ -170,40 +170,40 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             clientTableBody.appendChild(row);
         });
-    
+
         document.querySelectorAll('.edit-btn').forEach((button, index) => {
             button.addEventListener('click', () => editClient(index));
         });
-    
+
         document.querySelectorAll('.delete-btn').forEach((button, index) => {
             button.addEventListener('click', () => deleteClient(index));
         });
     }
-    
+
     // funcion para editar los datos del cliente
     function editClient(index) {
         const dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
         const clientToEdit = dataCliente[index];
-    
+
         // Llenar los campos comunes del formulario
         document.getElementById('editDni').value = clientToEdit.KEY_dni;
         document.getElementById('editDateUserName').value = clientToEdit.KEY_first_name;
         document.getElementById('editDateUserLastname').value = clientToEdit.KEY_last_name;
-    
+
         // Mostrar el modal
         $('#editClientModal').modal('show');
-    
+
         // Capturar el evento submit del formulario
         document.getElementById('editClientForm').addEventListener('submit', function (event) {
             event.preventDefault();
-    
+
             // Obtener los nuevos valores del formulario
             const editedClient = {
                 KEY_dni: document.getElementById('editDni').value,
                 KEY_first_name: document.getElementById('editDateUserName').value,
                 KEY_last_name: document.getElementById('editDateUserLastname').value
             };
-    
+
             // Verificar si el cliente es VIP o regular y actualizar el formulario en consecuencia
             if (clientToEdit.KEY_limit !== undefined) { // Cliente VIP
                 const newLimit = parseFloat(document.getElementById('vipCredito').value);
@@ -213,18 +213,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 const newDiscount = parseFloat(document.getElementById('editDiscount').value);
                 editedClient.KEY_discount = newDiscount;
             }
-    
+
             // Actualizar los datos del cliente en el array y en el localStorage
             dataCliente[index] = editedClient;
             localStorage.setItem('KEY_dataCliente', JSON.stringify(dataCliente));
-    
+
             // Ocultar el modal
             $('#editClientModal').modal('hide');
-    
+
             // Volver a mostrar la tabla actualizada
             displayClients();
         });
-    
+
         // Mostrar los campos específicos según el tipo de cliente
         if (clientToEdit.KEY_limit !== undefined) { // Cliente VIP
             document.getElementById('discountFormGroup').style.display = 'none'; // Ocultar el campo de descuento
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editDiscount').value = clientToEdit.KEY_discount;
         }
     }
-    
+
 
     // funcion eliminar cliente
     function deleteClient(index) {
@@ -254,6 +254,135 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         editClientModal.style.display = "none";
     })
+
+
+
+
+
+
+
+
+
+
+    // Agrega un evento click al botón "VIP"
+    document.getElementById("btnShowVip").addEventListener("click", function () {
+        const dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
+        showClients(dataCliente, 'vip');
+    });
+
+    // Agrega un evento click al botón "Regular Cliente"
+    document.getElementById("btnShowRegular").addEventListener("click", function () {
+        const dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
+        showClients(dataCliente, 'regular');
+    });
+
+    // Función para mostrar clientes según el tipo
+    function showClients(dataCliente, type) {
+        const clientTableBody = document.getElementById("clientTableBody");
+        clientTableBody.innerHTML = ''; // Limpiar la tabla antes de mostrar los nuevos datos
+
+        dataCliente.forEach(client => {
+            // Verificar el tipo de cliente y si coincide con el tipo deseado
+            if ((type === 'vip' && client.KEY_limit) || (type === 'regular' && client.KEY_discount)) {
+                const row = document.createElement("tr");
+                let limitCell = '';
+                let discountCell = '';
+
+                if (client.KEY_limit) {
+                    limitCell = `<td>${client.KEY_limit} VIP</td>`;
+                } else if (client.KEY_discount) {
+                    discountCell = `<td>${client.KEY_discount} Regular</td>`;
+                }
+
+                row.innerHTML = `
+                <td>${client.KEY_dni}</td>
+                <td>${client.KEY_first_name}</td>
+                <td>${client.KEY_last_name}</td>
+                ${limitCell}
+                ${discountCell}
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm edit-btn">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm delete-btn">Eliminar</button>
+                </td>
+            `;
+                clientTableBody.appendChild(row);
+            }
+        });
+
+        // Agregar eventos a los botones de editar y eliminar
+        document.querySelectorAll('.edit-btn').forEach((button, index) => {
+            button.addEventListener('click', () => editClient(index));
+        });
+
+        document.querySelectorAll('.delete-btn').forEach((button, index) => {
+            button.addEventListener('click', () => deleteClient(index));
+        });
+    }
+
+
+   // Seleccionar el campo de búsqueda y el botón de búsqueda
+   const findClientsTxt = document.getElementById("findClientsTxt");
+   const btnFindClients = document.getElementById("btnFindClients");
+
+   // Agregar un evento click al botón de búsqueda
+   btnFindClients.addEventListener("click", function (e) {
+       e.preventDefault(); // Prevenir el comportamiento por defecto del botón
+       buscar(); // Llamar a la función buscar()
+   });
+
+   // Agregar un evento input al campo de búsqueda para detectar cambios en el texto
+   findClientsTxt.addEventListener("input", function() {
+       buscar(); // Llamar a la función buscar() cuando cambie el texto en el campo de búsqueda
+   });
+
+   // Función para buscar clientes por su número de cédula
+   function buscar() {
+       const searchTerm = findClientsTxt.value.trim().toLowerCase();
+       const clientRows = document.querySelectorAll("#clientTableBody tr");
+       let found = false;
+
+       // Recorremos las filas de la tabla para buscar el término de búsqueda en el DNI
+       clientRows.forEach((row) => {
+           const dniCell = row.querySelector("td:first-child").textContent.toLowerCase();
+
+           // Verificar si el término de búsqueda coincide con el DNI de la fila actual
+           if (dniCell.includes(searchTerm)) {
+               found = true;
+               row.scrollIntoView({ behavior: "smooth", block: "center" }); // Realizar animación de desplazamiento
+               row.classList.add("highlight"); // Resaltar la fila encontrada
+               setTimeout(() => {
+                   row.classList.remove("highlight"); // Eliminar el resaltado después de un tiempo
+               }, 3000);
+               row.style.display = ""; // Mostrar la fila encontrada
+           } else {
+               row.style.display = "none"; // Ocultar las filas que no coinciden con el término de búsqueda
+           }
+       });
+
+       // Si se borra el término de búsqueda, mostrar todas las filas de la tabla
+       if (searchTerm === "") {
+           clientRows.forEach((row) => {
+               row.style.display = ""; // Mostrar todas las filas
+           });
+       }
+
+       // Si no se encuentra ningún cliente con el DNI especificado, mostrar un mensaje
+       if (!found && searchTerm !== "") {
+           alert("No se encontró ningún cliente con ese número de cédula.");
+       }
+   }
+
+
+
+
+
+
+
+
+
+
+
+
 
     displayClients();
 });

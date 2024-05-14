@@ -157,12 +157,20 @@
                 </div>
             </div>
 
+
+
             <div class="row tableClient" style="margin-left: 420px; width:70%;">
                 <div class="col-md-12">
                     <div class="card">
 
                         <div class="card-header">
                             <strong class="card-title">Tabla Datos Cliente</strong>
+                            <div class="" style=" float:right; ">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <button type="button" class="btn btn-primary" id="btnShowVip">VIP</button>
+                                    <button type="button" class="btn btn-primary" id="btnShowRegular">Regular Cliente</button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card-body">
@@ -170,13 +178,12 @@
                                 class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
                                 <div class="findClients">
-
-                                    <input class="findClientsTxt" id="findClientsTxt" type="text"
-                                        placeholder="Buscar cédula.">
-
-                                    <button class="btnFindClients" dir="btnFindClients" type="button"
-                                        onclick="buscar()"><i class="fas fa-search icono-búsqueda"></i></button>
+                                    <input class="findClientsTxt" id="findClientsTxt" type="text" placeholder="Buscar cédula." onclick="select()">
+                                    <button class="btnFindClients" id="btnFindClients" type="button" style="display: none;"><i class="fas fa-search icono-búsqueda"></i></button>
                                 </div>
+                                
+
+    
 
                                 <div class="row">
                                     <div class="col-sm-12 tableScroll" style="overflow-y: auto; max-height: 450px">
@@ -218,7 +225,13 @@
                                             </thead>
 
                                             <tbody id="clientTableBody">
-
+                                                <tr data-client-type="vip">
+                                                    <!-- Contenido de la fila para cliente VIP -->
+                                                </tr>
+                                                <tr data-client-type="regular">
+                                                    <!-- Contenido de la fila para cliente regular -->
+                                                </tr>
+                                                
                                             </tbody>
 
                                         </table>
