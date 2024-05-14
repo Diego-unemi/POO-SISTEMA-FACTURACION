@@ -1,63 +1,139 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Manejo de las SECTION del DOM --- no tocar
-    const lastSectionId = localStorage.getItem('lastSectionId');
-    showSection(lastSectionId || 'containerClientes');
+// clientes.js
 
-    function showSection(sectionId) {
-        document.querySelectorAll('main section').forEach(section => {
-            section.style.display = 'none';
-        });
-        document.getElementById(sectionId).style.display = 'block';
-        localStorage.setItem('lastSectionId', sectionId);
+class Client {
+    constructor(first_name = "Consumidor", last_name = "Final", dni = "9999999999") {
+      this.first_name = first_name;
+      this.last_name = last_name;
+      this._dni = dni;
     }
+  
+    get dni() {
+      return this._dni;
+    }
+  
+    set dni(value) {
+      if (value.length === 10 || value.length === 13) {
+        this._dni = value;
+      } else {
+        this._dni = "9999999999";
+      }
+    }
+  }
+  
+class RegularClient extends Client {
+    constructor(first_name = "Cliente", last_name = "Final", dni = "9999999999", card = false) {
+      super(first_name, last_name, dni);
+      this._discount = card ? 0.10 : 0;
+    }
+  
+    get discount() {
+      return this._discount;
+    }
+  
+    toString() {
+      return `Cliente: ${this.first_name} ${this.last_name} Descuento: ${this.discount}`;
+    }
+  }
 
-    document.querySelectorAll('nav button').forEach(button => {
-        button.addEventListener('click', function () {
-            const sectionId = this.getAttribute('data-section-id');
-            showSection(sectionId);
-        });
-    });
 
+
+class VipClient extends Client {
+  constructor(first_name = "Consumidor", last_name = "Final", dni = "9999999999") {
+    super(first_name, last_name, dni);
+    this._limit = 10000; // Límite de crédito del cliente VIP
+  }
+
+  get limit() {
+    return this._limit;
+  }
+
+  set limit(value) {
+    this._limit = (value < 10000 || value > 20000) ? 10000 : value;
+  }
+
+  toString() {
+    return `Cliente: ${this.first_name} ${this.last_name} Cupo: ${this.limit}`;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+   
     const btnSaveClient = document.getElementById("btnSaveClient");
     btnSaveClient.addEventListener('click', (event) => {
         event.preventDefault();
         dataCliente();
     });
-
-    // funcion guardar cliente
+    
     function dataCliente() {
-        const dniClient = document.getElementById("dniClient").value;
-        const dateUserName_Last = document.getElementById("dateUserName-Last").value;
-        const gmailUser = document.getElementById("gmailUser").value;
-        const descountUser = parseFloat(document.getElementById("descountUser").value);
-
-        if (dniClient && dateUserName_Last && gmailUser) {
-            if (isNaN(descountUser) || descountUser !== 0.10) {
-                alert("Descuento no autorizado.");
+        const dni = document.getElementById("dniClient").value;
+        const first_name = document.getElementById("datUserName").value;
+        const last_name = document.getElementById("datUserLastname").value;
+        const discount = document.getElementById("datUserLastname").value;
+        const limit = parseFloat(document.getElementById("vipCredito").value); // Convertir el valor a número
+    
+        const type = document.getElementById("Reg_Vip").value.toLowerCase().trim();
+    
+        if (dni && first_name && last_name ) {
+            if (type === 'regular') {
+                // Instanciar RegularClient para cliente regular
+                const regularClient = new RegularClient(first_name, last_name, dni, true);
+    
+                const clientData = {
+                    KEY_dni: regularClient.dni,
+                    KEY_first_name: regularClient.first_name,
+                    KEY_last_name: regularClient.last_name,
+                    KEY_discount: regularClient.discount,
+                };
+    
+                let dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
+                dataCliente.push(clientData);
+                localStorage.setItem('KEY_dataCliente', JSON.stringify(dataCliente));
+            } else if (type === 'vip' && !isNaN(limit)) { // Verificar que el límite de crédito sea un número válido
+                // Validar el límite de crédito
+                if (limit < 10000 || limit > 20000) {
+                    alert("El límite de crédito debe estar entre $10,000 y $20,000.");
+                    return;
+                }
+    
+                // Instanciar VipClient para cliente VIP con el límite de crédito validado
+                const vipClient = new VipClient(first_name, last_name, dni);
+                vipClient.limit = limit; // Asignar el límite de crédito validado
+    
+                const clientData = {
+                    KEY_dni: vipClient.dni,
+                    KEY_first_name: vipClient.first_name,
+                    KEY_last_name: vipClient.last_name,
+                    KEY_limit: vipClient.limit,
+                };
+    
+                let dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
+                dataCliente.push(clientData);
+                localStorage.setItem('KEY_dataCliente', JSON.stringify(dataCliente));
+            } else {
+                alert("Por favor, ingrese 'vip' o 'regular' para el tipo de cliente y un límite de crédito válido.");
                 return;
             }
-            let dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
-            dataCliente.push({
-                KEY_dniClient: dniClient,
-                KEY_dateUserName_Last: dateUserName_Last,
-                KEY_gmailUser: gmailUser,
-                KEY_descountUser: descountUser,
-            });
-            localStorage.setItem('KEY_dataCliente', JSON.stringify(dataCliente));
+    
             formReset();
-            displayClients();
+            displayClients(); 
         } else {
             alert("Por favor, complete todos los campos correctamente.");
         }
     }
+    
+    
 
     //funcion limpiar form
     function formReset() {
         const inputsToClear = [
             "dniClient",
-            "dateUserName-Last",
-            "gmailUser",
-            "descountUser",
+            "datUserName",
+            "datUserLastname",
+            "regDiscount",
+            "Reg_Vip",
+            "vipCredito",
+
+
         ];
         inputsToClear.forEach(inputId => {
             document.getElementById(inputId).value = "";
@@ -71,11 +147,22 @@ document.addEventListener('DOMContentLoaded', function () {
         const dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
         dataCliente.forEach((client, index) => {
             const row = document.createElement("tr");
+            let limitCell = '';
+            let discountCell = '';
+    
+            // Validar si es cliente VIP o Regular y asignar el valor a la celda correspondiente
+            if (client.KEY_limit) {
+                limitCell = `<td>${client.KEY_limit} VIP</td>`;
+            } else if (client.KEY_discount) {
+                discountCell = `<td>${client.KEY_discount} Regular</td>`;
+            }
+    
             row.innerHTML = `
-                <td>${client.KEY_dniClient}</td>
-                <td>${client.KEY_dateUserName_Last}</td>
-                <td>${client.KEY_gmailUser}</td>
-                <td>${client.KEY_descountUser}</td>
+                <td>${client.KEY_dni}</td>
+                <td>${client.KEY_first_name}</td>
+                <td>${client.KEY_last_name}</td>
+                ${limitCell}
+                ${discountCell}
                 <td>
                     <button type="button" class="btn btn-primary btn-sm edit-btn">Editar</button>
                     <button type="button" class="btn btn-danger btn-sm delete-btn">Eliminar</button>
@@ -83,62 +170,73 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             clientTableBody.appendChild(row);
         });
-
+    
         document.querySelectorAll('.edit-btn').forEach((button, index) => {
             button.addEventListener('click', () => editClient(index));
         });
-
+    
         document.querySelectorAll('.delete-btn').forEach((button, index) => {
             button.addEventListener('click', () => deleteClient(index));
         });
     }
-
+    
     // funcion para editar los datos del cliente
     function editClient(index) {
         const dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
         const clientToEdit = dataCliente[index];
-
-        document.getElementById('editDniClient').value = clientToEdit.KEY_dniClient;
-        document.getElementById('editDateUserName-Last').value = clientToEdit.KEY_dateUserName_Last;
-        document.getElementById('editGmailUser').value = clientToEdit.KEY_gmailUser;
-        document.getElementById('editDescountUser').value = clientToEdit.KEY_descountUser;
-
-        // Bloquear el input de descuento
-        document.getElementById('editDescountUser').setAttribute('disabled', 'disabled');
-
+    
+        // Llenar los campos comunes del formulario
+        document.getElementById('editDni').value = clientToEdit.KEY_dni;
+        document.getElementById('editDateUserName').value = clientToEdit.KEY_first_name;
+        document.getElementById('editDateUserLastname').value = clientToEdit.KEY_last_name;
+    
         // Mostrar el modal
-        document.getElementById('editClientModal').classList.add('show');
-        document.getElementById('editClientModal').style.display = 'block';
-        document.getElementById('editClientModal').setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
-
+        $('#editClientModal').modal('show');
+    
         // Capturar el evento submit del formulario
         document.getElementById('editClientForm').addEventListener('submit', function (event) {
             event.preventDefault();
-
+    
             // Obtener los nuevos valores del formulario
             const editedClient = {
-                KEY_dniClient: document.getElementById('editDniClient').value,
-                KEY_dateUserName_Last: document.getElementById('editDateUserName-Last').value,
-                KEY_gmailUser: document.getElementById('editGmailUser').value,
-                KEY_descountUser: parseFloat(document.getElementById('editDescountUser').value)
+                KEY_dni: document.getElementById('editDni').value,
+                KEY_first_name: document.getElementById('editDateUserName').value,
+                KEY_last_name: document.getElementById('editDateUserLastname').value
             };
-
+    
+            // Verificar si el cliente es VIP o regular y actualizar el formulario en consecuencia
+            if (clientToEdit.KEY_limit !== undefined) { // Cliente VIP
+                const newLimit = parseFloat(document.getElementById('vipCredito').value);
+                // Validar y establecer el nuevo límite de crédito
+                editedClient.KEY_limit = (isNaN(newLimit) || newLimit < 10000 || newLimit > 20000) ? 10000 : newLimit;
+            } else { // Cliente regular
+                const newDiscount = parseFloat(document.getElementById('editDiscount').value);
+                editedClient.KEY_discount = newDiscount;
+            }
+    
             // Actualizar los datos del cliente en el array y en el localStorage
             dataCliente[index] = editedClient;
             localStorage.setItem('KEY_dataCliente', JSON.stringify(dataCliente));
-
+    
             // Ocultar el modal
-            document.getElementById('editClientModal').classList.remove('show');
-            document.getElementById('editClientModal').style.display = 'none';
-            document.getElementById('editClientModal').setAttribute('aria-hidden', 'true');
-            document.body.classList.remove('modal-open');
-
+            $('#editClientModal').modal('hide');
+    
             // Volver a mostrar la tabla actualizada
             displayClients();
-
         });
+    
+        // Mostrar los campos específicos según el tipo de cliente
+        if (clientToEdit.KEY_limit !== undefined) { // Cliente VIP
+            document.getElementById('discountFormGroup').style.display = 'none'; // Ocultar el campo de descuento
+            document.getElementById('vipCreditFormGroup').style.display = 'block'; // Mostrar el campo de crédito VIP
+            document.getElementById('vipCredito').value = clientToEdit.KEY_limit;
+        } else { // Cliente regular
+            document.getElementById('vipCreditFormGroup').style.display = 'none'; // Ocultar el campo de crédito VIP
+            document.getElementById('discountFormGroup').style.display = 'block'; // Mostrar el campo de descuento
+            document.getElementById('editDiscount').value = clientToEdit.KEY_discount;
+        }
     }
+    
 
     // funcion eliminar cliente
     function deleteClient(index) {

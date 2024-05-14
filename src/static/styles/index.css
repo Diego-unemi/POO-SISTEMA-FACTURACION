@@ -3,6 +3,7 @@
 }
 
 .top {
+    
     margin-top: 25px;
     filter: drop-shadow(1px 1px 10px #494949);
     font-size: 20px;
@@ -16,7 +17,8 @@
 }
 
 .tableClient {
-    margin-top: -635px;
+
+    margin-top: -550px;
     filter: drop-shadow(1px 1px 10px #494949);
 }
 
@@ -76,4 +78,14 @@ nav ul li button:hover {
     background-color: #f8f9fa;
     padding: 10px 0;
     text-align: center;
+}
+
+
+form::-webkit-scrollbar{
+    width: 0;
+}
+
+.tableScroll::-webkit-scrollbar {
+    width: 0;
+
 }

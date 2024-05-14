@@ -9,17 +9,50 @@
     <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
     <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="/elaadmin-master/assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="/elaadmin-master/assets/css/style.css">
     <link rel="stylesheet" href="/elaadmin-master/assets/css/lib/chosen/chosen.min.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    <script>
+        $(document).ready(function () {
+            let timer;
+
+            $('#Reg_Vip').on('input', function () {
+                clearTimeout(timer);
+
+                timer = setTimeout(function () {
+                    var value = $('#Reg_Vip').val().toLowerCase().trim();
+                    if (value === 'vip') {
+                        $('.form-group-vip').show();
+                        $('.form-group-reg').hide();
+                    } else if (value === 'regular') {
+
+                        $('.form-group-vip').hide();
+                        $('.form-group-reg').show();
+
+                    } else {
+                        $('.form-group-vip').hide();
+                        $('.form-group-reg').hide();
+                        alert("Por favor, ingrese 'vip' o 'regular' para el tipo de cliente.");
+                    }
+                }, 1000);
+            });
+        });
+
+    </script>
 
     <title>Web Facturación</title>
 
@@ -48,53 +81,72 @@
 
         <section class="containerClientes" id="containerClientes">
             <div class="col-sm-3">
-                <div class="card top">
+                <div class="card top ">
 
                     <div class="card-header">
-                        <strong>Registar</strong> <small> Clientes Regulares</small>
+                        <strong>Registar</strong> <small> tipos de cliente</small>
                     </div>
 
                     <div class="card-body card-block">
 
-                        <form>
+                        <form style="max-height: 410px; overflow-y: auto;" id="clientForm">
 
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: -5px;">
                                 <label class=" form-control-label">Cédula</label>
-                                <div class="input-group">
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-id-card"></i></div>&nbsp;
                                     <input class="form-control" class="dniClient" id="dniClient">
                                 </div>
-                                <small class="form-text text-muted">ex. 0123456789</small>
+                                <small class="form-text text-muted">ex. 0123456789.</small>
                             </div>
 
-                            <div class="form-group">
-                                <label class=" form-control-label">Nombres y Apellidos</label>
-                                <div class="input-group">
+                            <div class="form-group" style="margin-top: -15px;">
+                                <label class=" form-control-label">Nombres</label>
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-user-plus"></i></div>&nbsp;
-                                    <input class="form-control" class="dateUserName-Last" id="dateUserName-Last">
+                                    <input class="form-control" class="datUserName" id="datUserName">
                                 </div>
-                                <small class="form-text text-muted">ex. Eduardo Javier Quinteros Pacheco</small>
+                                <small class="form-text text-muted">inf. Completos</small>
                             </div>
 
-                            <div class="form-group">
-                                <label class=" form-control-label">Correo Electronico</label>
-                                <div class="input-group">
+                            <div class="form-group" style="margin-top: -15px;">
+                                <label class=" form-control-label">Apellidos</label>
+                                <div class="input-group" style="margin-top: -5px;">
+                                    <div class="input-group-addon"><i class="fa fa-user-plus"></i></div>&nbsp;
+                                    <input class="form-control" class="datUserLastname" id="datUserLastname">
+                                </div>
+                                <small class="form-text text-muted">inf. Completos</small>
+                            </div>
+
+                            <div class="form-group" style="margin-top: -15px;">
+                                <label class="form-control-label">Regular o Vip</label>
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-envelope"></i></div>&nbsp;
-                                    <input class="form-control" class="gmailUser" id="gmailUser">
+                                    <input class="form-control" class="Reg_Vip" id="Reg_Vip">
                                 </div>
-                                <small class="form-text text-muted">ex. usuairo@correo.com</small>
+                                <small class="form-text text-muted">ex. Tipo de cliente </small>
                             </div>
 
-                            <div class="form-group">
-                                <label class=" form-control-label">Aplicar Descuento</label>
-                                <div class="input-group">
+                            <div class="form-group form-group-vip" style="display: none; margin-top:-15px;">
+                                <label class="form-control-label">Ingresar Crédito</label>
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-tags"></i></div>&nbsp;
-                                    <input class="form-control" class="descountUser" id="descountUser">
+                                    <input class="form-control" class="vipCredito" id="vipCredito">
                                 </div>
-                                <small class="form-text text-muted">inf. Obtendra un descuento es sus compras</small>
+                                <small class="form-text text-muted">inf. Vip adquiere un crédito</small>
                             </div>
 
-                            <div class="containerBtnSave">
+                            <div class="form-group form-group-reg" style="display: none; margin-top: -15px;">
+                                <label class="form-control-label">Descuento adquirido</label>
+                                <div class="input-group" style="margin-top: -5px;">
+                                    <div class="input-group-addon"><i class="fa fa-tags"></i></div>&nbsp;
+                                    <input class="form-control" class="regDiscount" id="regDiscount" value="0.10"
+                                        readonly>
+                                </div>
+                                <small class="form-text text-muted">inf. Cliente regular 0.10% descuento.</small>
+                            </div>
+
+                            <div class="containerBtnSave" style="margin-top: -10px; text-align: center;">
                                 <button type="button" class="btn btn-success btn-sm btnSaveClient"
                                     id="btnSaveClient">Guardar Clientes Regulares</button>
                             </div>
@@ -105,8 +157,8 @@
                 </div>
             </div>
 
-            <div class="row tableClient" style="margin-left: 420px; width:70%">
-                <div class="col-md-11">
+            <div class="row tableClient" style="margin-left: 420px; width:70%;">
+                <div class="col-md-12">
                     <div class="card">
 
                         <div class="card-header">
@@ -122,11 +174,12 @@
                                     <input class="findClientsTxt" id="findClientsTxt" type="text"
                                         placeholder="Buscar cédula.">
 
-                                    <button class="btnFindClients" dir="btnFindClients" type="button" onclick="buscar()"><i class="fas fa-search icono-búsqueda"></i></button>
+                                    <button class="btnFindClients" dir="btnFindClients" type="button"
+                                        onclick="buscar()"><i class="fas fa-search icono-búsqueda"></i></button>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-sm-12" style="overflow-y: auto; max-height: 450px">
+                                    <div class="col-sm-12 tableScroll" style="overflow-y: auto; max-height: 450px">
 
                                         <table id="bootstrap-data-table" style="text-align: center;"
                                             class="table table-striped table-bordered dataTable no-footer" role="grid"
@@ -143,25 +196,23 @@
 
                                                     <th class="sorting" tabindex="0"
                                                         aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
-                                                        aria-label="Nombres y Apellidos: activate to sort column ascending"
-                                                        style="width: 250.2px;">Nombres y Apellidos</th>
+                                                        aria-label="Nombres: activate to sort column ascending"
+                                                        style="width: 150.2px;">Nombres</th>
 
                                                     <th class="sorting_desc" tabindex="0"
                                                         aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
-                                                        aria-label="Correo Electronico: activate to sort column ascending"
-                                                        style="width: 173.2px;" aria-sort="descending">Correo
-                                                        Electronico
+                                                        aria-label="Apellidos: activate to sort column ascending"
+                                                        style="width: 150.2px;" aria-sort="descending">Apellidos
                                                     </th>
 
                                                     <th class="sorting" tabindex="0"
                                                         aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
-                                                        aria-label="Aplicar Descuento: activate to sort column ascending"
-                                                        style="width: 138px;">Descuento</th>
+                                                        aria-label="Descuento: activate to sort column ascending"
+                                                        style="width: 100.2;">Tipo Cliente</th>
 
                                                     <th class="sorting" tabindex="0"
                                                         aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
-                                                        aria-label="Opc: activate to sort column ascending"
-                                                        style="width: 138px;">Opc.</th>
+                                                        aria-label="Opc: activate to sort column ascending">Opc.</th>
                                                 </tr>
 
                                             </thead>
@@ -181,51 +232,49 @@
             </div>
 
             <!-- Modal -->
+            <!-- Modal -->
             <div class="modal fade modalNewDataClients" id="editClientModal" tabindex="-1"
                 aria-labelledby="editClientModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="editClientModalLabel">Editar Cliente</h5>
-
                             <button type="button" class="close" id="closeMolarX" data-dismiss="modal"
                                 aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            
                         </div>
-
                         <div class="modal-body">
                             <form id="editClientForm">
-
                                 <div class="form-group">
-                                    <label for="editDniClient">Cédula</label>
-                                    <input type="text" class="form-control" id="editDniClient" required>
+                                    <label for="editDni">Cédula</label>
+                                    <input type="text" class="form-control" id="editDni" required>
                                 </div>
-
                                 <div class="form-group">
-                                    <label for="editDateUserName-Last">Nombres y Apellidos</label>
-                                    <input type="text" class="form-control" id="editDateUserName-Last" required>
+                                    <label for="editDateUserName">Nombres</label>
+                                    <input type="text" class="form-control" id="editDateUserName" required>
                                 </div>
-
                                 <div class="form-group">
-                                    <label for="editGmailUser">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="editGmailUser" required>
+                                    <label for="editDateUserLastname">Apellidos</label>
+                                    <input type="text" class="form-control" id="editDateUserLastname" required>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="editDescountUser">Descuento</label>
-                                    <input type="number" step="0.01" class="form-control" id="editDescountUser"
-                                        required>
+                                <div class="form-group" id="discountFormGroup">
+                                    <label for="editDiscount">Descuento</label>
+                                    <input type="number" step="0.01" class="form-control" id="editDiscount" required
+                                        readonly>
                                 </div>
-
+                                <div class="form-group" id="vipCreditFormGroup" style="display: none;">
+                                    <label for="vipCredito">Ingresar Crédito</label>
+                                    <input type="number" class="form-control" id="vipCredito" step="1" min="10000"
+                                        max="20000" value="10000">
+                                </div>
                                 <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+
 
         </section>
 
@@ -237,40 +286,40 @@
                         <strong>Registar</strong> <small> Productos</small>
                     </div>
                     <div class="card-body card-block">
-                        <form>
-                            <div class="form-group">
+                        <form style="max-height: 410px; overflow-y: auto;">
+                            <div class="form-group" style="margin-top: -5px;">
                                 <label class=" form-control-label">Serial</label>
-                                <div class="input-group">
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-barcode"></i></div>&nbsp;
                                     <input class="form-control">
                                 </div>
                                 <small class="form-text text-muted">ex. 4251236589658</small>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: -15px;">
                                 <label class=" form-control-label">Descripción</label>
-                                <div class="input-group">
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-info-circle"></i></div>&nbsp;
                                     <input class="form-control">
                                 </div>
                                 <small class="form-text text-muted">ex. Televisor</small>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: -15px;">
                                 <label class=" form-control-label">Precio</label>
-                                <div class="input-group">
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-dollar-sign"></i></div>&nbsp;
                                     <input class="form-control">
                                 </div>
                                 <small class="form-text text-muted">inf. Valor monetario</small>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: -15px;">
                                 <label class=" form-control-label">Stock</label>
-                                <div class="input-group">
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-archive"></i></div>&nbsp;
                                     <input class="form-control">
                                 </div>
                                 <small class="form-text text-muted">inf. Cantidades</small>
                             </div>
-                            <div class="containerBtnSave">
+                            <div class="containerBtnSave" style="margin-top: -10px; text-align: center;">
                                 <button type="button" class="btnSaveProduct btn btn-success btn-sm"
                                     id="btnSaveProduct">Guardar Productos</button>
                             </div>
@@ -290,32 +339,31 @@
                     </div>
                     <div class="card-body card-block">
                         <form>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: -15px;">
                                 <label class=" form-control-label">Cédula</label>
-                                <div class="input-group">
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-id-card"></i></div>&nbsp;
                                     <input class="form-control">
                                 </div>
                                 <small class="form-text text-muted">ex. 0123456789</small>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: -15px;">
                                 <label class=" form-control-label">Serial del producto</label>
-                                <div class="input-group">
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-barcode"></i></div>&nbsp;
                                     <input class="form-control">
                                 </div>
                                 <small class="form-text text-muted">ex. 4251236589658</small>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: -15px;">
                                 <label class=" form-control-label">Cantidad</label>
-                                <div class="input-group">
+                                <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-shopping-cart"></i></div>&nbsp;
-
                                     <input class="form-control">
                                 </div>
                                 <small class="form-text text-muted">inf. 1 o mas productos</small>
                             </div>
-                            <div class="containerBtnSave">
+                            <div class="containerBtnSave" style="margin-top: -10px; text-align: center;">
                                 <button type="button" class="btnSaveInvoice btn btn-success btn-sm"
                                     id="btnSaveInvoice">Generar Factura</button>
                             </div>
@@ -335,6 +383,29 @@
         </div>
 
     </footer>
+
+    <script>
+        // Manejo de las SECTION del DOM --- no tocar
+        const lastSectionId = localStorage.getItem('lastSectionId');
+        showSection(lastSectionId || 'containerClientes');
+
+        function showSection(sectionId) {
+            document.querySelectorAll('main section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+            localStorage.setItem('lastSectionId', sectionId);
+        }
+
+        document.querySelectorAll('nav button').forEach(button => {
+            button.addEventListener('click', function () {
+                const sectionId = this.getAttribute('data-section-id');
+                showSection(sectionId);
+            });
+        });
+
+
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
 
