@@ -8,7 +8,6 @@ form::-webkit-scrollbar{
 
 .tableScroll::-webkit-scrollbar {
     width: 0;
-
 }
 
 .top {
@@ -18,7 +17,6 @@ form::-webkit-scrollbar{
 }
 
 .modalNewDataClients {
-    backdrop-filter: blur(20px);
     margin-top: 65px;
     filter: drop-shadow(1px 1px 10px #494949);
     font-size: 20px;
