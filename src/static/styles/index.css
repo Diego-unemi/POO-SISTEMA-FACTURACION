@@ -23,7 +23,6 @@ form::-webkit-scrollbar{
 }
 
 .tableClient {
-
     margin-top: -550px;
     filter: drop-shadow(1px 1px 10px #494949);
 }
@@ -86,4 +85,3 @@ nav ul li button:hover {
     text-align: center;
 }
 
-  

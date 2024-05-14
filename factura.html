@@ -3,14 +3,21 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Crear facturas con HTML, CSS y JavaScript</title>
+  <title>Sistema Web Facturación</title>
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
 <body>
+  <button style="margin-left: -17%; "><a href="index.html" style="background-color: transparent; color:black"> ←
+      Atras</a></button>
+
+
   <div class="control-bar">
+
     <div class="container">
+
       <div class="row">
+
         <div class="col-2-4">
           <div class="slogan">Facturación </div>
 
@@ -32,14 +39,16 @@
     </div><!--.container-->
   </div><!--.control-bar-->
 
-  <header class="row">
+
+
+  <header class="row" style="margin-top: -30px;">
     <div class="logoholder text-center">
       <img src="sales_invoices/assets/img/OIG4.jpeg">
     </div><!--.logoholder-->
 
     <div class="me">
       <p>
-        <strong>Sistema Web Facturación</strong><br>KM 1.5 vía Milagro
+        <strong style="font-size: 13px;">Sistema Web Facturación</strong><br>KM 1.5 vía Milagro
         Dr. Rómulo Minchala.<br>
         Ecuador.<br>
 
@@ -48,20 +57,23 @@
 
     <div class="info">
       <p>
-      <p style="font-weight: bold;">Sitio Web ⬇</p><a
+      <p style="font-weight: bold; font-size: 13px;">Sitio Web ⬇</p><a
         href="http://127.0.0.1:5501/index.html">www.Sist.WebFacturacion.com</a><br>
-      <p style="font-weight: bold;">Email ⬇</p><a
+      <p style="font-weight: bold; font-size: 13px;">Email ⬇</p><a
         href="mailto:equinterosp@unemi.edu.ec?subject=Sistema%20Web%20Facturacion"
         target="_blank">equinterosp@unemi.edu.ec</a>
       <br>
-      <p style="font-weight: bold;">Cell ⬇</p>+593 995996523<br>
+      <p style="font-weight: bold; font-size: 13px;">Cell ⬇</p>+593 995996523<br>
       </p>
     </div><!-- .info -->
 
     <div class="bank">
-      <p style="font-weight: bold;">Fecha de hoy ⬇</p><span>11/11/2020</span><br>
-      <p style="font-weight: bold;">Factura ⬇</p><span>000000012</span><br>
-      <p style="font-weight: bold;">Fecha vencimiento ⬇</p><span>11/11/2021</span>
+      <p style="font-weight: bold; font-size: 13px;">Fecha de hoy ⬇</p>
+      <span id="fechaActual"></span><br>
+      <p style="font-weight: bold; font-size: 13px;">Factura ⬇</p><span>000000012</span><br>
+
+      <p style="font-weight: bold; font-size: 13px;">Fecha vencimiento ⬇</p>
+      <span id="fechaVencimiento"></span>
     </div><!--.bank-->
 
   </header>
@@ -81,14 +93,12 @@
 
 
     <div class="col-2">
-
-
       <p class="client">
-        <strong>Facturar a</strong><br>
-        <input type="text" name="" id="" placeholder="Cédula del cliente"><br>
-       <span>eduardo quinteros</span><br>
-        <span>cliente regular</span><br>
-        <span>se le otorgo un descuento del 0.10 %</span>
+        <strong style="font-weight: bold; font-size: 15px;">Facturar con datos ⬇</strong><br><br>
+        <input type="text" name="cedula" id="cedulaInput" placeholder="Cédula del cliente" class="cedulaInput"><br>
+        <span id="nombreCompleto" style=" font-size: 15px;"></span><br>
+        <span id="tipoCliente" style=" font-size: 15px;"></span><br>
+        <span id="descuento" style=" font-size: 15px;"></span>
       </p>
     </div><!--.col-->
 
@@ -147,6 +157,56 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="assets/bower_components/jquery/dist/jquery.min.js"><\/script>')</script>
   <script src="assets/js/main.js"></script>
+
+  <script>
+    function mostrarFechas() {
+      var fechaActual = new Date();
+      var fechaVencimiento = new Date();
+      fechaVencimiento.setDate(fechaVencimiento.getDate() + 30); // Suma 30 días a la fecha de hoy
+
+      // Formatear las fechas en el formato dd/mm/yyyy
+      var fechaActualFormateada = `${fechaActual.getDate()}/${fechaActual.getMonth() + 1}/${fechaActual.getFullYear()}`;
+      var fechaVencimientoFormateada = `${fechaVencimiento.getDate()}/${fechaVencimiento.getMonth() + 1}/${fechaVencimiento.getFullYear()}`;
+
+      // Mostrar las fechas en los elementos span
+      document.getElementById("fechaActual").textContent = fechaActualFormateada;
+      document.getElementById("fechaVencimiento").textContent = fechaVencimientoFormateada;
+    }
+
+    // Llamar a la función al cargar la página
+    mostrarFechas();
+
+
+  
+  </script>
+  <script>
+    document.getElementById("cedulaInput").addEventListener("input", function() {
+      var cedula = this.value;
+      if (cedula.length === 10) {
+        var dataCliente = JSON.parse(localStorage.getItem("KEY_dataCliente"));
+        if (dataCliente) {
+          var clienteEncontrado = dataCliente.find(cliente => cliente.KEY_dni === cedula);
+          if (clienteEncontrado) {
+            document.getElementById("nombreCompleto").textContent = clienteEncontrado.KEY_first_name + " " + clienteEncontrado.KEY_last_name;
+            document.getElementById("tipoCliente").textContent = clienteEncontrado.KEY_limit ? "VIP" : "Regular";
+            document.getElementById("descuento").textContent = clienteEncontrado.KEY_limit ? clienteEncontrado.KEY_limit : clienteEncontrado.KEY_discount;
+          } else {
+            alert("NO EXISTE");
+          }
+        } else {
+          alert("No hay datos de clientes almacenados.");
+        }
+      } else {
+        // Limpiar los spans si la cédula no tiene 10 dígitos
+        document.getElementById("nombreCompleto").textContent = "";
+        document.getElementById("tipoCliente").textContent = "";
+        document.getElementById("descuento").textContent = "";
+      }
+    });
+    </script>
+    
+    
+
 </body>
 
 </html>
