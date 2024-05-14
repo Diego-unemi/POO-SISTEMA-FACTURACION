@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Crear facturas con HTML, CSS y JavaScript</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+  <div class="control-bar">
+    <div class="container">
+      <div class="row">
+        <div class="col-2-4">
+          <div class="slogan">Facturación </div>
+
+          <label for="config_tax">IVA:
+            <input type="checkbox" id="config_tax" />
+          </label>
+          <label for="config_tax_rate" class="taxrelated">Tasa:
+            <input type="text" id="config_tax_rate" value="12" />%
+          </label>
+          <label for="config_note">Nota:
+            <input type="checkbox" id="config_note" />
+          </label>
+
+        </div>
+        <div class="col-4 text-right">
+          <a href="javascript:window.print()">Imprimir</a>
+        </div><!--.col-->
+      </div><!--.row-->
+    </div><!--.container-->
+  </div><!--.control-bar-->
+
+  <header class="row">
+    <div class="logoholder text-center">
+      <img src="sales_invoices/assets/img/OIG4.jpeg">
+    </div><!--.logoholder-->
+
+    <div class="me">
+      <p>
+        <strong>Sistema Web Facturación</strong><br>KM 1.5 vía Milagro
+        Dr. Rómulo Minchala.<br>
+        Ecuador.<br>
+
+      </p>
+    </div><!--.me-->
+
+    <div class="info">
+      <p>
+      <p style="font-weight: bold;">Sitio Web ⬇</p><a
+        href="http://127.0.0.1:5501/index.html">www.Sist.WebFacturacion.com</a><br>
+      <p style="font-weight: bold;">Email ⬇</p><a
+        href="mailto:equinterosp@unemi.edu.ec?subject=Sistema%20Web%20Facturacion"
+        target="_blank">equinterosp@unemi.edu.ec</a>
+      <br>
+      <p style="font-weight: bold;">Cell ⬇</p>+593 995996523<br>
+      </p>
+    </div><!-- .info -->
+
+    <div class="bank">
+      <p style="font-weight: bold;">Fecha de hoy ⬇</p><span>11/11/2020</span><br>
+      <p style="font-weight: bold;">Factura ⬇</p><span>000000012</span><br>
+      <p style="font-weight: bold;">Fecha vencimiento ⬇</p><span>11/11/2021</span>
+    </div><!--.bank-->
+
+  </header>
+
+
+  <div class="row section">
+
+    <div class="col-2">
+      <h1>Factura</h1>
+    </div><!--.col-->
+
+    <div class="col-2 text-right details">
+      <p style="font-weight: bold;">Orden de compra ⬇</p><span>02022</span>
+
+    </div><!--.col-->
+
+
+
+    <div class="col-2">
+
+
+      <p class="client">
+        <strong>Facturar a</strong><br>
+        <input type="text" name="" id="" placeholder="Cédula del cliente"><br>
+       <span>eduardo quinteros</span><br>
+        <span>cliente regular</span><br>
+        <span>se le otorgo un descuento del 0.10 %</span>
+      </p>
+    </div><!--.col-->
+
+  </div><!--.row-->
+
+
+
+  <div class="invoicelist-body" style="margin-top: -30px;">
+    <table>
+      <thead>
+        <th width="15%">Serial</th>
+        <th width="50%">Descripción</th>
+
+        <th width="15%">Cant.</th>
+        <th width="20%">Precio</th>
+        <th class="taxrelated">IVA</th>
+        <th width="15%">Total</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td width='5%'><a class="control removeRow" href="#">x</a> <span>12345</span></td>
+          <td class="amount"><input type="text" value="1" /></td>
+          <td class="rate"><input type="text" value="99" /></td>
+          <td class="tax taxrelated"></td>
+          <td class="sum"></td>
+        </tr>
+      </tbody>
+    </table>
+    <a class="control newRow" href="#">+ Nueva fila</a>
+  </div><!--.invoice-body-->
+
+  <div class="invoicelist-footer">
+    <table>
+      <tr class="taxrelated">
+        <td>IVA:</td>
+        <td id="total_tax"></td>
+      </tr>
+      <tr>
+        <td><strong>Total:</strong></td>
+        <td id="total_price"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <h2>Nota:</h2>
+  </div><!--.note-->
+
+  <footer class="row">
+    <div class="col-1 text-center">
+      <p class="notaxrelated">El monto de la factura no incluye el impuesto sobre las ventas.</p>
+
+    </div>
+  </footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="assets/bower_components/jquery/dist/jquery.min.js"><\/script>')</script>
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>
