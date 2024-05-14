@@ -63,12 +63,16 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         dataCliente();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 4e5351f31f1c0e99e9151911750b42ea8af00993
         Limpiar_Inputs();
 >>>>>>> 4e5351f (cambios id)
     });
     
     function dataCliente() {
+<<<<<<< HEAD
 <<<<<<< HEAD
         const dni = document.getElementById("dniClient").value;
         const first_name = document.getElementById("datUserName").value;
@@ -124,6 +128,8 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             alert("Por favor, complete todos los campos correctamente.");
 =======
+=======
+>>>>>>> 4e5351f31f1c0e99e9151911750b42ea8af00993
         const dniClient = document.getElementById("dniClient").value;
         const firstName = document.getElementById("firstName").value;
         const lastName = document.getElementById("lastName").value;
