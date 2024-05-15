@@ -8,20 +8,26 @@ class Product {
         this.preci = preci;
         this.__stock = stock;
     }
+    get id(){
+        return this.__id
+    }
 
     get stock() {
         return this.__stock;
     }
 
     toString() {
-        return `Producto:${this.__id} ${this.descrip} ${this.preci} ${this.stock}`;
+        return `Producto:${this.id} ${this.descrip} ${this.preci} ${this.stock}`;
     }
 
     getJson() {
-        return { "id": this.__id, "descripcion": this.descrip, "precio": this.preci, "stock": this.stock };
+        return { "id": this.id, "descripcion": this.descrip, "precio": this.preci, "stock": this.stock };
     }
 
     show() {
-        console.log(`${this.__id}  ${this.descrip}           ${this.preci}  ${this.stock}`);
+        console.log(`${this.id}  ${this.descrip}           ${this.preci}  ${this.stock}`);
     }
 }
+
+export default Product;
+

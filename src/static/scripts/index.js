@@ -1,63 +1,63 @@
-import { MethodsModular } from "src/classes/classModularMethods.js";
+// import { MethodsModular } from "/src/classes/classModularMethods.js";
 
-const methodsModularInstance = new MethodsModular();
+// const methodsModularInstance = new MethodsModular();
 
-document.addEventListener('DOMContentLoaded', function () {
+// document.addEventListener('DOMContentLoaded', function () {
 
-    // Manejo de las SECTION del DOM --- no tocar
-    const lastSectionId = localStorage.getItem('lastSectionId');
-    showSection(lastSectionId || 'containerClientes');
+//     // Manejo de las SECTION del DOM --- no tocar
+//     const lastSectionId = localStorage.getItem('lastSectionId');
+//     showSection(lastSectionId || 'containerClientes');
 
-    function showSection(sectionId) {
-        document.querySelectorAll('main section').forEach(section => {
-            section.style.display = 'none';
-        });
-        document.getElementById(sectionId).style.display = 'block';
-        localStorage.setItem('lastSectionId', sectionId);
-    }
+//     function showSection(sectionId) {
+//         document.querySelectorAll('main section').forEach(section => {
+//             section.style.display = 'none';
+//         });
+//         document.getElementById(sectionId).style.display = 'block';
+//         localStorage.setItem('lastSectionId', sectionId);
+//     }
 
-    document.querySelectorAll('nav button').forEach(button => {
-        button.addEventListener('click', function () {
-            const sectionId = this.getAttribute('data-section-id');
-            showSection(sectionId);
-        });
-    });
+//     document.querySelectorAll('nav button').forEach(button => {
+//         button.addEventListener('click', function () {
+//             const sectionId = this.getAttribute('data-section-id');
+//             showSection(sectionId);
+//         });
+//     });
 
     
-    const btnSaveClient = document.getElementById("btnSaveClient");
-    btnSaveClient.addEventListener('click', (event) => {
-        event.preventDefault();
-        dataCliente();
+//     const btnSaveClient = document.getElementById("btnSaveClient");
+//     btnSaveClient.addEventListener('click', (event) => {
+//         event.preventDefault();
+//         dataCliente();
 
-        Limpiar_Inputs();
-    });
+//         Limpiar_Inputs();
+//     });
 
-    function dataCliente() {
-        const dni = document.getElementById("dni").value;
-        const firstName = document.getElementById("firstName").value;
-        const lastName = document.getElementById("lastName").value;
+//     function dataCliente() {
+//         const dni = document.getElementById("dni").value;
+//         const firstName = document.getElementById("firstName").value;
+//         const lastName = document.getElementById("lastName").value;
         
-        if (dni && firstName && lastName) {
-            let dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
-            dataCliente.push({
-                KEY_dni: dni,
-                KEY_firstName: firstName,
-                KEY_lastName: lastName,
-                KEY_descont: 0.10,
-            });
-            localStorage.setItem('KEY_dataCliente', JSON.stringify(dataCliente));
-        }
-    }
+//         if (dni && firstName && lastName) {
+//             let dataCliente = JSON.parse(localStorage.getItem('KEY_dataCliente')) || [];
+//             dataCliente.push({
+//                 KEY_dni: dni,
+//                 KEY_firstName: firstName,
+//                 KEY_lastName: lastName,
+//                 KEY_descont: 0.10,
+//             });
+//             localStorage.setItem('KEY_dataCliente', JSON.stringify(dataCliente));
+//         }
+//     }
 
-    function Limpiar_Inputs() {
-        const remove_inputs = [
-            "dni",
-            "firstName",
-            "lastName",
-        ];
-        remove_inputs.forEach((remove_inputs) => {
-            document.getElementById(remove_inputs).value = ""; 
-        });
-    }
-});
+//     function Limpiar_Inputs() {
+//         const remove_inputs = [
+//             "dni",
+//             "firstName",
+//             "lastName",
+//         ];
+//         remove_inputs.forEach((remove_inputs) => {
+//             document.getElementById(remove_inputs).value = ""; 
+//         });
+//     }
+// });
 

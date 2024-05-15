@@ -263,44 +263,156 @@
                         <strong>Registar</strong> <small> Productos</small>
                     </div>
                     <div class="card-body card-block">
-                        <form>
+                        <form id="productForm">
                             <div class="form-group">
-                                <label class=" form-control-label">Serial</label>
+                                <label for="productId" class=" form-control-label">Serial</label>
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-barcode"></i></div>&nbsp;
-                                    <input class="form-control">
+                                    <input type="number" class="form-control" class="productId" id="productId">
                                 </div>
                                 <small class="form-text text-muted">ex. 4251236589658</small>
                             </div>
                             <div class="form-group">
-                                <label class=" form-control-label">Descripción</label>
+                                <label for="productDescrip" class=" form-control-label">Descripción</label>
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-info-circle"></i></div>&nbsp;
-                                    <input class="form-control">
+                                    <input type="text" class="form-control" class="productDescrip" id="productDescrip">
                                 </div>
                                 <small class="form-text text-muted">ex. Televisor</small>
                             </div>
                             <div class="form-group">
-                                <label class=" form-control-label">Precio</label>
+                                <label for="productPrice" class=" form-control-label">Precio</label>
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-dollar-sign"></i></div>&nbsp;
-                                    <input class="form-control">
+                                    <input type="number" class="form-control" class="productPrice" id="productPrice">
                                 </div>
                                 <small class="form-text text-muted">inf. Valor monetario</small>
                             </div>
                             <div class="form-group">
-                                <label class=" form-control-label">Stock</label>
+                                <label for="productStock" class=" form-control-label">Stock</label>
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-archive"></i></div>&nbsp;
-                                    <input class="form-control">
+                                    <input type="number" class="form-control" class="productStock" id="productStock">
                                 </div>
                                 <small class="form-text text-muted">inf. Cantidades</small>
                             </div>
                             <div class="containerBtnSave">
-                                <button type="button" class="btnSaveProduct btn btn-success btn-sm"
+                                <button type="submit" class="btnSaveProduct btn btn-success btn-sm"
                                     id="btnSaveProduct">Guardar Productos</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row tableClient" style="margin-left: 420px; width:70%;">
+                <div class="col-md-12">
+                    <div class="card">
+
+                        <div class="card-header">
+                            <strong class="card-title">Tabla Datos Producto</strong>
+                        </div>
+
+                        <div class="card-body">
+                            <div id="bootstrap-data-table_wrapper"
+                                class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+                                <div class="findClients">
+                                    <input class="findProductsTxt" id="findProductsNum" type="text" placeholder="Buscar serial." onclick="select()">
+                                    <button class="btnFindProducts" id="btnFindProducts" type="button" style="display: none;"><i class="fas fa-search icono-búsqueda"></i></button>
+                                </div>
+                                
+
+    
+
+                                <div class="row">
+                                    <div class="col-sm-12 tableScroll" style="overflow-y: auto; max-height: 450px">
+
+                                        <table id="bootstrap-data-table" style="text-align: center;"
+                                            class="table table-striped table-bordered dataTable no-footer" role="grid"
+                                            aria-describedby="bootstrap-data-table_info">
+
+                                            <thead>
+
+                                                <tr role="row">
+
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                        aria-label="Cédula: activate to sort column ascending"
+                                                        style="width: 100.2px;">Serial</th>
+
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                        aria-label="Nombres: activate to sort column ascending"
+                                                        style="width: 100.2;">Descripción</th>
+
+                                                    <th class="sorting_desc" tabindex="0"
+                                                        aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                        aria-label="Apellidos: activate to sort column ascending"
+                                                        style="width: 150.2px;" aria-sort="descending">Precio</th>
+
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                        aria-label="Descuento: activate to sort column ascending"
+                                                        style="width: 150.2px;">Stock</th>
+
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                        aria-label="Opc: activate to sort column ascending">Opc.</th>
+                                                </tr>
+
+                                            </thead>
+
+                                            <tbody id="productTableBody">
+                                                <tr>
+                                                    <!-- Contenido de la fila para cliente VIP -->
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <!-- Modal -->
+            <div class="modal fade modalNewDataProducts" id="editProductModal" tabindex="-1"
+                aria-labelledby="editProductModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editProductModalLabel">Editar Producto</h5>
+                            <button type="button" class="close" id="closeMolarX" data-dismiss="modal"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editProductForm">
+                                <div class="form-group">
+                                    <label for="editSerial">Serial</label>
+                                    <input type="number" class="form-control" id="editSerial" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editDescription">Descripción</label>
+                                    <input type="text" class="form-control" id="editDescription" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editPrice">Precio</label>
+                                    <input type="number" class="form-control" id="editPrice" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editStock">Stock</label>
+                                    <input type="number" class="form-control" id="editStock" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -370,8 +482,15 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="/elaadmin-master/assets/js/main.js"></script>
     <script src="/elaadmin-master/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS (también asegúrate de que Bootstrap CSS esté cargado) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script src="/src/static/scripts/index.js"></script>
+
+    <script type="module" src="/src/static/scripts/index.js"></script>
+    <script type="module" src="/src/static/scripts/index2.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
