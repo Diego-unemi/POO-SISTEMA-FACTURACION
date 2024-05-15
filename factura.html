@@ -11,87 +11,60 @@
   <button style="margin-left: -17%; "><a href="index.html" style="background-color: transparent; color:black"> ←
       Atras</a></button>
 
-
   <div class="control-bar">
-
     <div class="container">
-
       <div class="row">
-
         <div class="col-2-4">
           <div class="slogan">Facturación </div>
-
           <label for="config_tax">IVA:
             <input type="checkbox" id="config_tax" />
           </label>
           <label for="config_tax_rate" class="taxrelated">Tasa:
             <input type="text" id="config_tax_rate" value="12" />%
           </label>
-          <label for="config_note">Nota:
-            <input type="checkbox" id="config_note" />
-          </label>
-
         </div>
         <div class="col-4 text-right">
           <a href="javascript:window.print()">Imprimir</a>
-        </div><!--.col-->
-      </div><!--.row-->
-    </div><!--.container-->
-  </div><!--.control-bar-->
-
-
+        </div>
+      </div>
+    </div>
+  </div>
 
   <header class="row" style="margin-top: -30px;">
     <div class="logoholder text-center">
       <img src="sales_invoices/assets/img/OIG4.jpeg">
-    </div><!--.logoholder-->
-
+    </div>
     <div class="me">
       <p>
         <strong style="font-size: 13px;">Sistema Web Facturación</strong><br>KM 1.5 vía Milagro
         Dr. Rómulo Minchala.<br>
         Ecuador.<br>
-
       </p>
-    </div><!--.me-->
-
+    </div>
     <div class="info">
       <p>
-      <p style="font-weight: bold; font-size: 13px;">Sitio Web ⬇</p><a
-        href="http://127.0.0.1:5501/index.html">www.Sist.WebFacturacion.com</a><br>
-      <p style="font-weight: bold; font-size: 13px;">Email ⬇</p><a
-        href="mailto:equinterosp@unemi.edu.ec?subject=Sistema%20Web%20Facturacion"
-        target="_blank">equinterosp@unemi.edu.ec</a>
+      <p style="font-weight: bold; font-size: 13px;">Sitio Web ⬇</p><a href="http://127.0.0.1:5501/index.html">www.Sist.WebFacturacion.com</a><br>
+      <p style="font-weight: bold; font-size: 13px;">Email ⬇</p><a href="mailto:equinterosp@unemi.edu.ec?subject=Sistema%20Web%20Facturacion" target="_blank">equinterosp@unemi.edu.ec</a>
       <br>
       <p style="font-weight: bold; font-size: 13px;">Cell ⬇</p>+593 995996523<br>
       </p>
-    </div><!-- .info -->
-
+    </div>
     <div class="bank">
       <p style="font-weight: bold; font-size: 13px;">Fecha de hoy ⬇</p>
       <span id="fechaActual"></span><br>
-      <p style="font-weight: bold; font-size: 13px;">Factura ⬇</p><span>000000012</span><br>
-
+      <p style="font-weight: bold; font-size: 13px;">Factura ⬇</p>
+      <span id="facturaIncremental">00001</span><br>
       <p style="font-weight: bold; font-size: 13px;">Fecha vencimiento ⬇</p>
       <span id="fechaVencimiento"></span>
-    </div><!--.bank-->
-
+    </div>
   </header>
 
-
   <div class="row section">
-
     <div class="col-2">
       <h1>Factura</h1>
-    </div><!--.col-->
-
+    </div>
     <div class="col-2 text-right details">
-      <p style="font-weight: bold;">Orden de compra ⬇</p><span>02022</span>
-
-    </div><!--.col-->
-
-
-
+    </div>
     <div class="col-2">
       <p class="client">
         <strong style="font-weight: bold; font-size: 15px;">Facturar con datos ⬇</strong><br><br>
@@ -100,57 +73,57 @@
         <span id="tipoCliente" style=" font-size: 15px;"></span><br>
         <span id="descuento" style=" font-size: 15px;"></span>
       </p>
-    </div><!--.col-->
-
-  </div><!--.row-->
-
-
+    </div>
+  </div>
 
   <div class="invoicelist-body" style="margin-top: -30px;">
-    <table>
+    <table id="invoiceTable">
       <thead>
-        <th width="15%">Serial</th>
-        <th width="50%">Descripción</th>
-
-        <th width="15%">Cant.</th>
-        <th width="20%">Precio</th>
-        <th class="taxrelated">IVA</th>
-        <th width="15%">Total</th>
+        <tr>
+          <th width="15%">Serial</th>
+          <th width="50%">Descripción</th>
+          <th width="20%">Precio</th>
+          <th width="15%">Cant.</th>
+          <th width="25%">Total</th>
+        </tr>
       </thead>
       <tbody>
         <tr>
-          <td width='5%'><a class="control removeRow" href="#">x</a> <span>12345</span></td>
-          <td class="amount"><input type="text" value="1" /></td>
-          <td class="rate"><input type="text" value="99" /></td>
-          <td class="tax taxrelated"></td>
-          <td class="sum"></td>
+          <td><a class="control removeRow">x</a><input class="findSerialInvoice" type="text"/></td>
+          <td><span class="descripInvoice"></span></td>
+          <td><span class="precioInvoice"></span></td>
+          <td><input class="cantInvoice" type="text"/></td>
+          <td><span class="preTotalInvoice"></span></td>
         </tr>
       </tbody>
     </table>
-    <a class="control newRow" href="#">+ Nueva fila</a>
-  </div><!--.invoice-body-->
+  
+    <button id="aggFilaDescripInvoice">Agregar fila</button>
+    <button id="guardarFactura">Guardar factura</button> 
+  </div>
 
   <div class="invoicelist-footer">
     <table>
+      <tr class="subtotal-row">
+        <td>Subtotal:</td>
+        <td><span id="subtotal"></span></td>
+      </tr>
       <tr class="taxrelated">
         <td>IVA:</td>
-        <td id="total_tax"></td>
+        <td><span id="IVA"></span></td>
       </tr>
       <tr>
         <td><strong>Total:</strong></td>
-        <td id="total_price"></td>
+        <td id="totalPrice"></td>
       </tr>
+      
+      
     </table>
   </div>
-
-  <div class="note">
-    <h2>Nota:</h2>
-  </div><!--.note-->
 
   <footer class="row">
     <div class="col-1 text-center">
       <p class="notaxrelated">El monto de la factura no incluye el impuesto sobre las ventas.</p>
-
     </div>
   </footer>
 
@@ -176,10 +149,6 @@
     // Llamar a la función al cargar la página
     mostrarFechas();
 
-
-  
-  </script>
-  <script>
     document.getElementById("cedulaInput").addEventListener("input", function() {
       var cedula = this.value;
       if (cedula.length === 10) {
@@ -203,9 +172,147 @@
         document.getElementById("descuento").textContent = "";
       }
     });
-    </script>
+  </script>
+
+  <script>
+    document.getElementById("aggFilaDescripInvoice").addEventListener("click", function() {
+      var table = document.getElementById("invoiceTable").getElementsByTagName("tbody")[0];
+      var newRow = table.insertRow(-1);
+      newRow.innerHTML = `
+          <td><a class="control removeRow">x</a><input class="findSerialInvoice" type="text"/></td>
+          <td><span class="descripInvoice"></span></td>
+          <td><span class="precioInvoice"></span></td>
+          <td><input class="cantInvoice" type="text"/></td>
+          <td><span class="preTotalInvoice"></span></td>
+        `;
+    });
+
+    document.addEventListener("input", function(event) {
+      if (event.target.classList.contains("findSerialInvoice")) {
+        var serial = event.target.value;
+        if (serial.length === 4) {
+          var dataProduct = JSON.parse(localStorage.getItem("dataProducto"));
+          if (dataProduct) {
+            var product = dataProduct.find(product => product.key_serial === serial);
+            if (product) {
+              var row = event.target.parentNode.parentNode;
+              row.getElementsByClassName("descripInvoice")[0].textContent = product.key_descrip;
+              row.getElementsByClassName("precioInvoice")[0].textContent = product.key_precio;
+            } else {
+              alert("Producto no encontrado");
+            }
+          } else {
+            alert("No hay datos de productos almacenados.");
+          }
+        } else {
+          var row = event.target.parentNode.parentNode;
+          row.getElementsByClassName("descripInvoice")[0].textContent = "";
+          row.getElementsByClassName("precioInvoice")[0].textContent = "";
+        }
+      }
+    });
+    
+  
+    
+    function calcularTotal() {
+      var subtotal = 0;
+      var rows = document.getElementById("invoiceTable").getElementsByTagName("tbody")[0].rows;
+      for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var price = parseFloat(row.querySelector(".precioInvoice").textContent);
+        var quantity = parseFloat(row.querySelector(".cantInvoice").value);
+        var total = price * quantity;
+        row.querySelector(".preTotalInvoice").textContent = total.toFixed(2);
+        subtotal += total;
+      }
+    
+      document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+    
+      var ivaPercentage = parseFloat(document.getElementById("config_tax_rate").value);
+      var totalIVA = subtotal * (ivaPercentage / 100);
+    
+      document.getElementById("IVA").textContent = totalIVA.toFixed(2);
+    
+      // Sumar subtotal y IVA para obtener el total
+      var totalConIVA = subtotal + totalIVA;
+      document.getElementById("totalPrice").textContent = totalConIVA.toFixed(2);
+    }
     
     
+
+    document.addEventListener("input", function(event) {
+      if (event.target.classList.contains("cantInvoice")) {
+        calcularTotal();
+      }
+    });
+
+    document.getElementById("config_tax_rate").addEventListener("input", function(event) {
+      calcularTotal();
+    });
+  </script>
+
+  <script>
+    var numeroFactura = localStorage.getItem("key_NumIncremental");
+    if (!numeroFactura) {
+      numeroFactura = "00001";
+      localStorage.setItem("key_NumIncremental", numeroFactura);
+    }
+    document.getElementById("facturaIncremental").textContent = numeroFactura;
+
+    function incrementarNumeroFactura() {
+      var nuevoNumeroFactura = (parseInt(numeroFactura) + 1).toString().padStart(5, '0');
+      localStorage.setItem("key_NumIncremental", nuevoNumeroFactura);
+      document.getElementById("facturaIncremental").textContent = nuevoNumeroFactura;
+    }
+
+    document.getElementById("guardarFactura").addEventListener("click", function () {
+      var factura = {
+        key_numInvoice: localStorage.getItem("key_NumIncremental"),
+        key_dniClient: document.getElementById("cedulaInput").value,
+        key_nameLast: document.getElementById("nombreCompleto").textContent,
+        key_typeClient: document.getElementById("tipoCliente").textContent,
+        key_discountReg: document.getElementById("descuento").textContent,
+        key_datailsProduct: []
+      };
+
+      if (factura.key_typeClient === "VIP") {
+        factura.limite = factura.key_discountReg;
+        delete factura.key_discountReg;
+      }
+
+      var detalles = [];
+      var filas = document.querySelectorAll("#invoiceTable tbody tr");
+      filas.forEach(function (fila) {
+        var detalle = {
+          key_serialProduct: fila.querySelector(".findSerialInvoice").value,
+          key_descrip: fila.querySelector(".descripInvoice").textContent,
+          key_precio: fila.querySelector(".precioInvoice").textContent,
+          key_cuantity: fila.querySelector(".cantInvoice").value,
+          key_total: fila.querySelector(".preTotalInvoice").textContent
+        };
+        detalles.push(detalle);
+      });
+
+      factura.key_datailsProduct = detalles;
+
+      var facturasGuardadas = JSON.parse(localStorage.getItem("key_Invoices")) || [];
+      facturasGuardadas.push(factura);
+      localStorage.setItem("key_Invoices", JSON.stringify(facturasGuardadas));
+
+      incrementarNumeroFactura();
+
+      document.getElementById("cedulaInput").value = "";
+      document.getElementById("nombreCompleto").textContent = "";
+      document.getElementById("tipoCliente").textContent = "";
+      document.getElementById("descuento").textContent = "";
+
+      document.querySelectorAll("#invoiceTable tbody tr").forEach(function (fila) {
+        fila.remove();
+      });
+
+      alert("Factura guardada correctamente.");
+    });
+  </script>
 
 </body>
 

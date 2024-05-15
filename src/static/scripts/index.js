@@ -112,6 +112,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 KEY_limit: document.getElementById('editVip').value,
             };
 
+            const cedulaValidation = clientInst.validateCedula(editedClient.KEY_dni); 
+            if (cedulaValidation !== true) return alert(cedulaValidation);        
+
             if (clientToEdit.KEY_limit !== undefined) {
                 const newLimit = parseFloat(document.getElementById('editVip').value);
 
@@ -184,6 +187,35 @@ document.addEventListener('DOMContentLoaded', function () {
         // Corrección: Llama a los métodos de la clase Client con this
         clientInst.attachEditButtonListeners(editClient);
         clientInst.attachDeleteButtonListeners(deleteClient);
+    }
+
+    
+
+    // de prueba nomas
+    document.getElementById("formProduct").addEventListener('submit', function (event) {
+        event.preventDefault();
+        dataProduct();
+    });
+
+    // prueba 
+    function dataProduct() {
+        const serial = document.getElementById("serial").value;
+        const descrip = document.getElementById("descrip").value;
+        const precio = document.getElementById("precio").value;
+        const stock = parseInt(document.getElementById("stock").value);
+    
+        if (serial && descrip && precio && stock) {
+    
+            const dataJsonProduct = JSON.parse(localStorage.getItem('dataProducto')) || [];
+            dataJsonProduct.push({
+                key_serial: serial,
+                key_descrip: descrip,
+                key_precio: precio,
+                key_stock: stock,
+            
+            });
+            localStorage.setItem('dataProducto', JSON.stringify(dataJsonProduct));
+        }
     }
 
     displayClients();

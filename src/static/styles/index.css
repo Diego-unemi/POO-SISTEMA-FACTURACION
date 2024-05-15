@@ -27,6 +27,13 @@ form::-webkit-scrollbar{
     filter: drop-shadow(1px 1px 10px #494949);
 }
 
+.tableRegisterInvoice{
+    width: 100%;
+    filter: drop-shadow(1px 1px 10px #494949);
+    margin-top: 25px;
+padding-left: 15px;
+}
+
 header {
     background-color: #ffffff;
     filter: drop-shadow(1px 1px 10px rgb(73, 73, 73));
@@ -71,9 +78,15 @@ nav ul li button:hover {
 }
 
 .findClientsTxt,
+.findInvoiceTxt
 .btnFindClients {
     border: 2px solid #a1a0a0;
     border-radius: 3px;
+}
+
+.findInvoice{
+    margin-bottom: 20px;
+    margin-left: 85%;
 }
 
 .footer {

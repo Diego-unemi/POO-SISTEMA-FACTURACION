@@ -72,10 +72,10 @@
                         <button data-section-id="containerProductos">Productos</button>
                     </li>
                     <li>
-                        <button data-section-id="containerInvoice">Facturar</button>
+                        <button data-section-id="containerInvoice">Registros de facturas</button>
                     </li>
                     <li>
-                        <button><a href="factura.html" style="color: black;">Facturar CLIENTE</a></button>
+                        <button><a href="factura.html" style="color: black;">Facturar</a></button>
                     </li>
                     
                 </ul>
@@ -327,12 +327,12 @@
                         <strong>Registar</strong> <small> Productos</small>
                     </div>
                     <div class="card-body card-block">
-                        <form style="max-height: 410px; overflow-y: auto;">
+                        <form style="max-height: 410px; overflow-y: auto;" id="formProduct">
                             <div class="form-group" style="margin-top: -5px;">
                                 <label class=" form-control-label">Serial</label>
                                 <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-barcode"></i></div>&nbsp;
-                                    <input class="form-control">
+                                    <input class="form-control" id="serial">
                                 </div>
                                 <small class="form-text text-muted">ex. 4251236589658</small>
                             </div>
@@ -340,7 +340,7 @@
                                 <label class=" form-control-label">Descripción</label>
                                 <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-info-circle"></i></div>&nbsp;
-                                    <input class="form-control">
+                                    <input class="form-control" id="descrip">
                                 </div>
                                 <small class="form-text text-muted">ex. Televisor</small>
                             </div>
@@ -348,7 +348,7 @@
                                 <label class=" form-control-label">Precio</label>
                                 <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-dollar-sign"></i></div>&nbsp;
-                                    <input class="form-control">
+                                    <input class="form-control" id="precio">
                                 </div>
                                 <small class="form-text text-muted">inf. Valor monetario</small>
                             </div>
@@ -356,15 +356,16 @@
                                 <label class=" form-control-label">Stock</label>
                                 <div class="input-group" style="margin-top: -5px;">
                                     <div class="input-group-addon"><i class="fa fa-archive"></i></div>&nbsp;
-                                    <input class="form-control">
+                                    <input class="form-control" id="stock">
                                 </div>
                                 <small class="form-text text-muted">inf. Cantidades</small>
                             </div>
                             <div class="containerBtnSave" style="margin-top: -10px; text-align: center;">
-                                <button type="button" class="btnSaveProduct btn btn-success btn-sm"
+                                <button type="submit" class="btnSaveProduct btn btn-success btn-sm"
                                     id="btnSaveProduct">Guardar Productos</button>
                             </div>
                         </form>
+                      
                     </div>
                 </div>
             </div>
@@ -373,42 +374,85 @@
 
         <section class="containerInvoice" id="containerInvoice">
 
-            <div class="col-xs-3 col-sm-3">
-                <div class="card top">
-                    <div class="card-header">
-                        <strong>Facturar</strong> <small> con los datos del cliente</small>
-                    </div>
-                    <div class="card-body card-block">
-                        <form>
-                            <div class="form-group" style="margin-top: -5px;">
-                                <label class=" form-control-label">Cédula</label>
-                                <div class="input-group" style="margin-top: -5px;">
-                                    <div class="input-group-addon"><i class="fa fa-id-card"></i></div>&nbsp;
-                                    <input class="form-control">
+        
+            <div class="row tableRegisterInvoice" >
+                <div class="col-md-12">
+                    <div class="card">
+
+                        <div class="card-header">
+                            <strong class="card-title">Tabla Datos Cliente</strong>
+
+                            <div class="" style=" float:right; ">
+                                <div class="col-md-12" style="text-align: center;">
+
+                                    <button type="button" class="btn btn-primary" id="btnShowVip">VIP</button>
+                                    <button type="button" class="btn btn-primary" id="btnShowRegular">Regular
+                                        Cliente</button>
+
                                 </div>
-                                <small class="form-text text-muted">ex. 0123456789</small>
                             </div>
-                            <div class="form-group" style="margin-top: -15px;">
-                                <label class=" form-control-label">Serial del producto</label>
-                                <div class="input-group" style="margin-top: -5px;">
-                                    <div class="input-group-addon"><i class="fa fa-barcode"></i></div>&nbsp;
-                                    <input class="form-control">
+
+                        </div>
+
+                        <div class="card-body">
+                            <div id="bootstrap-data-table_wrapper"
+                                class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+                                <div class="findInvoice">
+                                    <input class="findInvoiceTxt" id="findInvoiceTxt" type="text"
+                                        placeholder="Buscar factura." onclick="select()">
+                                    <button class="btnFindInvoice" id="btnFindInvoice" type="button"
+                                        style="display: none;"><i class="fas fa-search icono-búsqueda"></i></button>
                                 </div>
-                                <small class="form-text text-muted">ex. 4251236589658</small>
-                            </div>
-                            <div class="form-group" style="margin-top: -15px;">
-                                <label class=" form-control-label">Cantidad</label>
-                                <div class="input-group" style="margin-top: -5px;">
-                                    <div class="input-group-addon"><i class="fa fa-shopping-cart"></i></div>&nbsp;
-                                    <input class="form-control">
+
+                                <div class="row">
+                                    <div class="col-sm-12 tableScroll" style="overflow-y: auto; max-height: 450px">
+
+                                        <table id="bootstrap-data-table" style="text-align: center;"
+                                            class="table table-striped table-bordered dataTable no-footer" role="grid"
+                                            aria-describedby="bootstrap-data-table_info">
+
+                                            <thead>
+
+                                                <tr role="row">
+
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                        aria-label="Número factura: activate to sort column ascending"
+                                                        style="width: 100.2px;">Número factura</th>
+
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                        aria-label="Cliente: activate to sort column ascending"
+                                                        style="width: 150.2px;">Cliente</th>
+
+                                        
+
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                        aria-label="Descuento: activate to sort column ascending"
+                                                        style="width: 100.2;">Tipo Cliente</th>
+
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                        aria-label="Opc: activate to sort column ascending">Opc.</th>
+                                                </tr>
+
+                                            </thead>
+
+                                            <tbody id="INVOICEtable">
+
+                                                <tr data-client-type="vip"></tr>
+                                                <tr data-client-type="regular"></tr>
+
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
                                 </div>
-                                <small class="form-text text-muted">inf. 1 o mas productos</small>
                             </div>
-                            <div class="containerBtnSave" style="margin-top: -10px; text-align: center;">
-                                <button type="button" class="btnSaveInvoice btn btn-success btn-sm"
-                                    id="btnSaveInvoice">Generar Factura</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
