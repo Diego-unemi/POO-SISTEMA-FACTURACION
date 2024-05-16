@@ -10,13 +10,19 @@ class ProductManager {
     }
 
     addProduct(id, descrip, preci, stock) {
-        this.products.push(new Product(id, descrip, preci, stock));
+        const newProduct = new Product(id, descrip, preci, stock);
+        this.products.push(newProduct);
         this.saveProducts();
         this.renderProducts();
     }
 
     deleteProduct(id) {
-        this.products = this.products.filter(product => product.__id !== id);
+        const index = this.products.findIndex(product => product.__id === id);
+        if (index === -1) {
+            alert("Producto no encontrado");
+            return;
+        }
+        this.products.splice(index, 1);
         this.saveProducts();
         this.renderProducts();
     }
@@ -24,10 +30,11 @@ class ProductManager {
     editProduct(id) {
         const productToEdit = this.products.find(product => product.__id === id);
         if (!productToEdit) {
-            console.error("Producto no encontrado");
+            alert("Producto no encontrado");
             return;
         }
 
+        // Show the modal and populate the form fields with the product data
         document.getElementById('editSerial').value = productToEdit.__id;
         document.getElementById('editDescription').value = productToEdit.descrip;
         document.getElementById('editPrice').value = productToEdit.preci;
@@ -37,29 +44,30 @@ class ProductManager {
 
         const editForm = document.getElementById('editProductForm');
 
-        // Definir el manejador de eventos 'submit' para el formulario de edición
+        // Define the submit event handler for the edit form
         const handleEditSubmit = (event) => {
             event.preventDefault();
             const editedProduct = {
                 __id: document.getElementById('editSerial').value,
                 descrip: document.getElementById('editDescription').value,
-                preci: document.getElementById('editPrice').value,
-                __stock: document.getElementById('editStock').value
+                preci: parseFloat(document.getElementById('editPrice').value),
+                __stock: parseInt(document.getElementById('editStock').value)
             };
 
-            const index = this.products.findIndex(product => product.__id === editedProduct.__id);
+            const index = this.products.findIndex(product => product.__id === id);
             if (index === -1) {
-                console.error("Producto no encontrado");
+                alert("Producto no encontrado");
                 return;
             }
 
+            // Update the product in the products array
             this.products[index] = editedProduct;
             this.saveProducts();
 
             $('#editProductModal').modal('hide');
             this.renderProducts();
 
-            // Remover el manejador de eventos 'submit' después de manejarlo una vez
+            // Remove the submit event listener after handling it once
             editForm.removeEventListener('submit', handleEditSubmit);
         };
 
